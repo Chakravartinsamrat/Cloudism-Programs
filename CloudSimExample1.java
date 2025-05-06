@@ -58,38 +58,6 @@ public class CloudSimExample1 {
 
             broker.submitCloudletList(cloudletList);
 
-            // =============================
-            // EXAMPLE 2: Add multiple VMs and Cloudlets
-            /*
-            // Uncomment this block for Example 2
-            for (int i = 1; i < 3; i++) {
-                Vm extraVm = new Vm(i, brokerId, 1200, 1, 1024, 1000, 10000, "Xen",
-                        new CloudletSchedulerTimeShared());
-                vmList.add(extraVm);
-
-                Cloudlet extraCloudlet = new Cloudlet(i, 500000, 1, 300, 300,
-                        utilizationModel, utilizationModel, utilizationModel);
-                extraCloudlet.setUserId(brokerId);
-                extraCloudlet.setVmId(i);
-                cloudletList.add(extraCloudlet);
-            }
-            */
-
-            // =============================
-            // EXAMPLE 3: Use Space-Shared Scheduling
-            /*
-            // Replace VM creation line above with:
-            new Vm(vmId, brokerId, mips, pesNumber, ram, bw, size, vmm,
-                   new CloudletSchedulerSpaceShared());
-            */
-
-            // =============================
-            // EXAMPLE 4: Custom VM Allocation Policy or Datacenter Configuration
-            /*
-            // Replace createDatacenter method with a custom one:
-            // Datacenter datacenter0 = createCustomDatacenter("Datacenter_0");
-            */
-
             // Start simulation
             CloudSim.startSimulation();
 

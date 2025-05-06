@@ -1,3 +1,4 @@
+// WC_Mapper.java
 import java.io.IOException;
 import java.util.StringTokenizer;
 import org.apache.hadoop.io.IntWritable;
@@ -9,20 +10,18 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 
 public class WC_Mapper extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
-    private final static IntWritable one = new IntWritable(1);
-    private Text word = new Text();
-    
     public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
         String line = value.toString();
-        StringTokenizer tokenizer = new StringTokenizer(line);
-        while (tokenizer.hasMoreTokens()) {
-            word.set(tokenizer.nextToken());
-            output.collect(word, one);
+        String[] tokenizer = line.split("");
+        for(String SingleChar : tokenizer) {
+            Text charKey = new Text(SingleChar);
+            IntWritable One = new IntWritable(1);
+            output.collect(charKey, One);
         }
     }
 }
 
-
+// WC_Reducer.java
 import java.io.IOException;
 import java.util.Iterator;
 import org.apache.hadoop.io.IntWritable;
@@ -42,7 +41,7 @@ public class WC_Reducer extends MapReduceBase implements Reducer<Text, IntWritab
     }
 }
 
-
+// WC_Runner.java
 import java.io.IOException;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -57,7 +56,7 @@ import org.apache.hadoop.mapred.TextOutputFormat;
 public class WC_Runner {
     public static void main(String[] args) throws IOException {
         JobConf conf = new JobConf(WC_Runner.class);
-        conf.setJobName("WordCount");
+        conf.setJobName("CharCount");
         conf.setOutputKeyClass(Text.class);
         conf.setOutputValueClass(IntWritable.class);
         conf.setMapperClass(WC_Mapper.class);
