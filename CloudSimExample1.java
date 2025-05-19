@@ -107,23 +107,23 @@ public class CloudSimExample1 {
     }
 
     // Output
-    private static void printCloudletList(List<Cloudlet> list) {
+      private static void printCloudletList(List<Cloudlet> list) {
+        int size = list.size();
+        Cloudlet cloudlet;
+
         String indent = "    ";
-        System.out.println("\n========== OUTPUT ==========\n");
-        System.out.println("Cloudlet ID" + indent + "STATUS" + indent +
-                "Data center ID" + indent + "VM ID" + indent + "Time" + indent +
-                "Start Time" + indent + "Finish Time");
+        Log.printLine();
+        Log.printLine("========== OUTPUT ==========");
+        Log.printLine("Cloudlet ID" + indent + "STATUS" + indent + "Data center ID" + indent + "VM ID" + indent + "Time" + indent + "Start Time" + indent + "Finish Time");
 
-        for (Cloudlet cloudlet : list) {
-            System.out.print(indent + cloudlet.getCloudletId() + indent + indent);
+        DecimalFormat dft = new DecimalFormat("###.##");
+        for (int i = 0; i < size; i++) {
+            cloudlet = list.get(i);
+            Log.print(indent + cloudlet.getCloudletId() + indent + indent);
 
-            if (cloudlet.getStatus() == Cloudlet.SUCCESS) {
-                System.out.println("SUCCESS" + indent +
-                        cloudlet.getResourceId() + indent + indent +
-                        cloudlet.getVmId() + indent + indent +
-                        cloudlet.getActualCPUTime() + indent +
-                        cloudlet.getExecStartTime() + indent + indent +
-                        cloudlet.getFinishTime());
+            if (cloudlet.getCloudletStatus() == Cloudlet.SUCCESS) {
+                Log.print("SUCCESS");
+                Log.printLine(indent + indent + cloudlet.getResourceId() + indent + indent + indent + cloudlet.getVmId() + indent + indent + dft.format(cloudlet.getActualCPUTime()) + indent + indent + dft.format(cloudlet.getExecStartTime()) + indent + indent + dft.format(cloudlet.getFinishTime()));
             }
         }
     }
